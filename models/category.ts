@@ -4,7 +4,8 @@ const categorySchema = new Schema(
     {
         name:{
             type:String,
-            require:true,
+            trim:true,
+            require:[true, "category name is required"],
             unique:[true, "this is already exists"],
             minlength: [3, "Too short category name"],
             maxlength: [32, "Too long category name"],
@@ -13,7 +14,7 @@ const categorySchema = new Schema(
         slug:{
             type:String,
         },
-        
+
         image: String,
     },
     {

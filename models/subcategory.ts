@@ -4,9 +4,10 @@ import { Schema, model } from "mongoose";
 const subcategorySchema = new Schema(
     {
         name : {
+            type:String,
+            trim:true,
             require:[true, "subcategory name is required"],
             unique:[true, "This name already exsits"],
-            trim:true,
             minlength: [3, "Too short subcategory name"],
             maxlength: [32, "Too long subcategory name"],
         },
