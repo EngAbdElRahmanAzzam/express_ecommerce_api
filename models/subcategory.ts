@@ -6,7 +6,7 @@ const subcategorySchema = new Schema(
         name : {
             type:String,
             trim:true,
-            require:[true, "subcategory name is required"],
+            required:[true, "subcategory name is required"],
             unique:[true, "This name already exsits"],
             minlength: [3, "Too short subcategory name"],
             maxlength: [32, "Too long subcategory name"],
@@ -19,7 +19,7 @@ const subcategorySchema = new Schema(
         category:{
             type:Schema.ObjectId,
             ref:"Category",
-            require:[true, "category parent is required"]
+            required:[true, "category parent is required"]
         }
     }
     ,
