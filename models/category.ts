@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+import  { Schema, model } from "mongoose";
 
-const categorySchema = new mongoose.Schema(
+const categorySchema = new Schema(
     {
         name:{
             type:String,
@@ -9,9 +9,11 @@ const categorySchema = new mongoose.Schema(
             minlength: [3, "Too short category name"],
             maxlength: [32, "Too long category name"],
         },
+
         slug:{
             type:String,
         },
+        
         image: String,
     },
     {
@@ -19,4 +21,4 @@ const categorySchema = new mongoose.Schema(
     }    
 )
 
-export const categoryModel = mongoose.model('Category', categorySchema)
+export const categoryModel = model('Category', categorySchema)
