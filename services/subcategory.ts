@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import asyncHandler from "express-async-handler"
-import { subcategoryModel } from "../models/subcategory"
+import { SubcategoryModel } from "../models/subcategory"
 import slugify from "slugify"
 import { responseHandle } from "../utils/apiResponse"
 
@@ -19,7 +19,7 @@ export const createSubcategory = asyncHandler(
         const {title , categoryId} = req.body
         const slug = slugify(title)
 
-        const subcategory = await subcategoryModel.create({name:title, slug, category:categoryId})
+        const subcategory = await SubcategoryModel.create({name:title, slug, category:categoryId})
         res.status(201).json(responseHandle(subcategory))
     }
 )
@@ -33,7 +33,7 @@ export const createSubcategory = asyncHandler(
  */
 export const getSubcategories = asyncHandler(
     async (req:Request, res:Response) => {
-        const subcategories = await subcategoryModel.find()
+        const subcategories = await SubcategoryModel.find()
         const data = {
             lenght:subcategories.length,
             subcategories:subcategories
@@ -54,7 +54,7 @@ export const getSubcategory = asyncHandler(
     async (req:Request, res:Response) => {
         const subcategoryId = req.params.id
 
-        const subcategory = await subcategoryModel.findById(subcategoryId).populate({path:"category", select:"name image -_id"})
+        const subcategory = await SubcategoryModel.findById(subcategoryId).populate({path:"category", select:"name image -_id"})
         if(subcategory)
             res.status(200).json(responseHandle(subcategory))
         else
@@ -77,7 +77,7 @@ export const updateSubcategory = asyncHandler(
         const { title ,categoryId } = req.body
         const slug = slugify(title)
 
-        const subcategory = await subcategoryModel.findByIdAndUpdate(subcategoryId, {name:title,slug,category:categoryId}, {new:true})
+        const subcategory = await SubcategoryModel.findByIdAndUpdate(subcategoryId, {name:title,slug,category:categoryId}, {new:true})
         
         if(subcategory)
             res.status(201).json(responseHandle(subcategory))
@@ -97,7 +97,7 @@ export const deleteSubcategory = asyncHandler(
     async (req:Request, res:Response) => {
         const subcategoryId = req.params.id
 
-        const subcategory = await subcategoryModel.findByIdAndDelete(subcategoryId)
+        const subcategory = await SubcategoryModel.findByIdAndDelete(subcategoryId)
 
         if(subcategory)
             res.status(201).json(responseHandle(subcategory))

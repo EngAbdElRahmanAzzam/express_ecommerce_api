@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import slugify  from "slugify" 
-import { categoryModel } from "../models/category";
+import { CategoryModel } from "../models/category";
 import { responseHandle } from "../utils/apiResponse";
 
 /**
@@ -14,10 +14,10 @@ import { responseHandle } from "../utils/apiResponse";
 
 export const createCategory = asyncHandler(
     async (req:Request, res:Response) => {
-        const catergoryName = req.body.title
-        const slug = slugify(catergoryName)
+        const {title} = req.body
+        const slug = slugify(title)
 
-        const category =await categoryModel.create({name:catergoryName,slug});
+        const category =await CategoryModel.create({name:title,slug});
         res.status(201).json(responseHandle(category))
     }
 )
@@ -33,7 +33,7 @@ export const getCategories = async (req:Request, res:Response) => {
     const page = +(req.query.p  ?? 1)
     const limit = +(req.query.l ?? 10)
     const skip = (page-1) * limit
-    const categories = await categoryModel.find().skip(skip).limit(limit)
+    const categories = await CategoryModel.find().skip(skip).limit(limit)
     const data = {
         length : categories.length,
         categories:categories
@@ -52,7 +52,7 @@ export const getCategory = asyncHandler(
     async (req:Request, res:Response) => {
         const categoryId = req.params.id
 
-        const category = await categoryModel.findById(categoryId)
+        const category = await CategoryModel.findById(categoryId)
 
         if(category)
             res.status(200).json(responseHandle(category))
@@ -72,10 +72,10 @@ export const getCategory = asyncHandler(
 export const updateCategory = asyncHandler( 
     async (req:Request, res:Response) => {
         const categoryId = req.params.id
-        const newCategoryName = req.body.category
-        const newCategorySlug = slugify(newCategoryName)
+        const {title} = req.body
+        const slug = slugify(title)
 
-        const category = await categoryModel.findOneAndUpdate({_id:categoryId}, {name:newCategoryName , slug:newCategorySlug},{new:true})
+        const category = await CategoryModel.findOneAndUpdate({_id:categoryId}, {name:title , slug},{new:true})
         res.status(201).json(responseHandle(category))
     }
 )
@@ -91,7 +91,7 @@ export const deleteCategory = asyncHandler(
     async (req:Request, res:Response) => {
         const categoryId = req.params.id
 
-        const category = await categoryModel.findOneAndDelete({_id:categoryId})
+        const category = await CategoryModel.findOneAndDelete({_id:categoryId})
 
         if(category)
             res.status(201).json(responseHandle(category))

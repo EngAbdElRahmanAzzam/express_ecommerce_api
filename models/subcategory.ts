@@ -29,4 +29,4 @@ const subcategorySchema = new Schema(
 )
 
 
-export const subcategoryModel = model("Subcategory", subcategorySchema)
+export const SubcategoryModel = model("Subcategory", subcategorySchema)
