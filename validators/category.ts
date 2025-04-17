@@ -1,10 +1,8 @@
-import { param , body} from "express-validator";
-import { msgErrors } from "../utils/msgErrors";
+import {  body} from "express-validator";
 import { catchErrorValidator } from "../middlewares/validator";
+import { idMongoValidator } from ".";
 
-const idCategoryValidator = [
-    param('id').isMongoId().withMessage(msgErrors.id),
-]
+const idCategoryValidator = idMongoValidator
 
 const bodyCategoryValidator = [
     body('title')
