@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import slugify  from "slugify" 
-
 import { categoryModel } from "../models/category";
 import { responseHandle } from "../utils/apiResponse";
 
