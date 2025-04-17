@@ -54,7 +54,7 @@ export const getSubcategory = asyncHandler(
     async (req:Request, res:Response) => {
         const subcategoryId = req.params.id
 
-        const subcategory = await subcategoryModel.findById(subcategoryId)
+        const subcategory = await subcategoryModel.findById(subcategoryId).populate({path:"category", select:"name image -_id"})
         if(subcategory)
             res.status(200).json(responseHandle(subcategory))
         else

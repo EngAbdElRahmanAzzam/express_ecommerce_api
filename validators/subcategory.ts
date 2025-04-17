@@ -16,24 +16,24 @@ const bodysubCategoryValidator = [
     .isMongoId().withMessage(msgErrors.id)
 ]
 
-export const createCategoryValidator = [
+export const createSubcategoryValidator = [
     ...bodysubCategoryValidator,
     catchErrorValidator
 ]
 
-export const getCategoryValidator = [
+export const getSubcategoryValidator = [
     ...idsubCategoryValidator,
     catchErrorValidator
 ]
 
-export const updateCategoryValidator = [
+export const updateSubcategoryValidator = [
     ...idsubCategoryValidator,
     ...bodysubCategoryValidator,
     catchErrorValidator
 ]
 
 
-export const deleteCategoryValidator = [
+export const deleteSubcategoryValidator = [
     ...idsubCategoryValidator,
     catchErrorValidator
 ]

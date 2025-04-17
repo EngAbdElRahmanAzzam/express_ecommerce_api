@@ -2,7 +2,6 @@ import { Router } from "express";
 import { createCategory, getCategories, getCategory, updateCategory , deleteCategory} from "../services/category";
 import { createCategoryValidator, getCategoryValidator ,updateCategoryValidator , deleteCategoryValidator } from "../validators/category";
 
-
 export const categoryRouter = Router()
 
 categoryRouter.route('/')
