@@ -4,6 +4,7 @@ import { APP_PORT } from "./config"
 import { dbConnect } from "./db"
 import { categoryRouter } from "./api/category"
 import { subcategoryRouter } from "./api/subcategory"
+import { brandRouter } from "./api/brand"
 
 
 
@@ -15,6 +16,7 @@ app.use(json())
 
 app.use("/category",categoryRouter)
 app.use("/subcategory",subcategoryRouter)
+app.use("/brand", brandRouter)
 
 app.use((error:any , req: Request, res: Response, next: NextFunction)=>{
     res.status(500).json(error)

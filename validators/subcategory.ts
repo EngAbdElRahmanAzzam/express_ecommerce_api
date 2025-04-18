@@ -3,7 +3,6 @@ import { msgErrors } from "../utils/msgErrors";
 import { catchErrorValidator } from "../middlewares/validator";
 import { idMongoValidator } from ".";
 
-const idsubCategoryValidator = idMongoValidator
 
 const bodysubCategoryValidator = [
     body('title')
@@ -22,18 +21,18 @@ export const createSubcategoryValidator = [
 ]
 
 export const getSubcategoryValidator = [
-    ...idsubCategoryValidator,
+    ...idMongoValidator,
     catchErrorValidator
 ]
 
 export const updateSubcategoryValidator = [
-    ...idsubCategoryValidator,
+    ...idMongoValidator,
     ...bodysubCategoryValidator,
     catchErrorValidator
 ]
 
 
 export const deleteSubcategoryValidator = [
-    ...idsubCategoryValidator,
+    ...idMongoValidator,
     catchErrorValidator
 ]
