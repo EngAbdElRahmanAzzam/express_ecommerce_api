@@ -6,7 +6,7 @@ const categorySchema = new Schema(
             type:String,
             trim:true,
             required:[true, "category name is required"],
-            unique:[true, "this is already exists"],
+            unique:[true, "name is already exists"],
             minlength: [3, "Too short category name"],
             maxlength: [32, "Too long category name"],
         },
