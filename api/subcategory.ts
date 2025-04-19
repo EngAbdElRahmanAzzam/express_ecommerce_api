@@ -3,7 +3,7 @@ import {createSubcategory, getSubcategories , getSubcategory , updateSubcategory
 import { createSubcategoryValidator, getSubcategoryValidator , updateSubcategoryValidator, deleteSubcategoryValidator } from "../validators/subcategory";
 
 
-export const subcategoryRouter = Router()
+export const subcategoryRouter = Router({mergeParams:true})
 
 subcategoryRouter.route('/')
     .post(createSubcategoryValidator,createSubcategory)

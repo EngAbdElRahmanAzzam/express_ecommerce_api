@@ -16,6 +16,8 @@ import { responseHandle } from "../utils/apiResponse"
  */
 export const createSubcategory = asyncHandler(
     async (req:Request, res:Response) => {
+        console.log(req.params)
+
         const {title , categoryId} = req.body
         const slug = slugify(title)
 
@@ -33,6 +35,7 @@ export const createSubcategory = asyncHandler(
  */
 export const getSubcategories = asyncHandler(
     async (req:Request, res:Response) => {
+        console.log(req.params)
         const subcategories = await SubcategoryModel.find()
         const data = {
             lenght:subcategories.length,
