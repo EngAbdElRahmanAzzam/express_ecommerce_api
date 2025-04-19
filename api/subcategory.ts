@@ -1,13 +1,14 @@
 import {Router } from "express";
-import {createSubcategory, getSubcategories , getSubcategory , updateSubcategory , deleteSubcategory } from "../services/subcategory";
-import { createSubcategoryValidator, getSubcategoryValidator , updateSubcategoryValidator, deleteSubcategoryValidator } from "../validators/subcategory";
+import {setCategoryIdSubcategory ,createSubcategory, getSubcategories , getSubcategory , updateSubcategory , deleteSubcategory , deleteSubcategoryByCategory} from "../services/subcategory";
+import { createSubcategoryValidator, categoryIdRequredValidator, categoryIdOptionalValidator ,getSubcategoryValidator , updateSubcategoryValidator, deleteSubcategoryValidator } from "../validators/subcategory";
 
 
 export const subcategoryRouter = Router({mergeParams:true})
 
 subcategoryRouter.route('/')
-    .post(createSubcategoryValidator,createSubcategory)
-    .get(getSubcategories)
+    .post(setCategoryIdSubcategory,createSubcategoryValidator,createSubcategory)
+    .get(categoryIdOptionalValidator,getSubcategories)
+    .delete(categoryIdRequredValidator,deleteSubcategoryByCategory)
 
 subcategoryRouter.route('/:id')
     .get(getSubcategoryValidator,getSubcategory)

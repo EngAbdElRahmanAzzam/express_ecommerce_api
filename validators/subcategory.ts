@@ -1,4 +1,4 @@
-import {  body} from "express-validator";
+import {  body , param} from "express-validator";
 import { msgErrors } from "../utils/msgErrors";
 import { catchErrorValidator } from "../middlewares/validator";
 import { idMongoValidator } from ".";
@@ -13,6 +13,21 @@ const bodysubCategoryValidator = [
     body('categoryId')
     .notEmpty().withMessage('Category required')
     .isMongoId().withMessage(msgErrors.id)
+]
+
+export const categoryIdOptionalValidator = [
+    param('categoryId')
+        .optional()
+        .isMongoId()
+        .withMessage(msgErrors.id),
+    catchErrorValidator
+]
+
+export const categoryIdRequredValidator = [
+    param('categoryId')
+        .isMongoId()
+        .withMessage(msgErrors.id),
+    catchErrorValidator
 ]
 
 export const createSubcategoryValidator = [

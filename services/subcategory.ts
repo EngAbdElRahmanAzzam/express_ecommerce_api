@@ -1,4 +1,4 @@
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 import asyncHandler from "express-async-handler"
 import { SubcategoryModel } from "../models/subcategory"
 import slugify from "slugify"
@@ -14,10 +14,18 @@ import { responseHandle } from "../utils/apiResponse"
  * @param  categoryId - Description of the category Id.
  * @returns new category
  */
+export const setCategoryIdSubcategory = asyncHandler(
+    async (req:Request, res:Response, next:NextFunction) => {
+        const { categoryId } = req.params
+        if(categoryId){
+            req.body.categoryId = categoryId
+        }
+        next()
+    }
+)
+
 export const createSubcategory = asyncHandler(
     async (req:Request, res:Response) => {
-        console.log(req.params)
-
         const {title , categoryId} = req.body
         const slug = slugify(title)
 
@@ -35,8 +43,13 @@ export const createSubcategory = asyncHandler(
  */
 export const getSubcategories = asyncHandler(
     async (req:Request, res:Response) => {
-        console.log(req.params)
-        const subcategories = await SubcategoryModel.find()
+        const {categoryId} = req.params
+        let objectFilter:Record<string, string> = {}
+        if(categoryId)
+        {
+            objectFilter['category'] = categoryId
+        }
+        const subcategories = await SubcategoryModel.find(objectFilter)
         const data = {
             lenght:subcategories.length,
             subcategories:subcategories
@@ -68,8 +81,8 @@ export const getSubcategory = asyncHandler(
 
 /**
  * @access private
- * @breif update category
- * @url PUT api/v1/category/:id
+ * @breif update subcategories
+ * @url PUT api/v1/subcategory/:id
  * @param  title - Description of the category name.
  * @param  categoryId - Description of the category name.
  * @returns category
@@ -93,7 +106,7 @@ export const updateSubcategory = asyncHandler(
 /**
  * @access private
  * @breif deelte certin category
- * @url DELETE api/v1/category/:id
+ * @url DELETE api/v1/subcategory/:id
  * @returns category
  */
 export const deleteSubcategory = asyncHandler(
@@ -104,6 +117,27 @@ export const deleteSubcategory = asyncHandler(
 
         if(subcategory)
             res.status(201).json(responseHandle(subcategory))
+        else
+            res.status(404).json(responseHandle("not found subcategory", true))
+    }
+)
+
+
+/**
+ * @access private
+ * @breif delte subcategories by certin category
+ * @url DELETE api/v1/category/:id/subcategory
+ * @returns category
+ */
+
+export const deleteSubcategoryByCategory = asyncHandler(
+    async (req:Request, res:Response) => {
+        const {categoryId} = req.params
+
+        const response = await SubcategoryModel.deleteMany({category:categoryId})
+
+        if(response.deletedCount)
+            res.status(201).json(responseHandle(response))
         else
             res.status(404).json(responseHandle("not found subcategory", true))
     }
