@@ -3,6 +3,8 @@ import asyncHandler from "express-async-handler";
 import slugify  from "slugify" 
 import { CategoryModel } from "../models/category";
 import { responseHandle } from "../utils/apiResponse";
+import { factory } from "./handlerFactory";
+import {ICategory} from "../interfaces/category"
 
 /**
  * @access private
@@ -87,15 +89,4 @@ export const updateCategory = asyncHandler(
  * @returns category | not found
  */
 
-export const deleteCategory = asyncHandler( 
-    async (req:Request, res:Response) => {
-        const categoryId = req.params.id
-
-        const category = await CategoryModel.findOneAndDelete({_id:categoryId})
-
-        if(category)
-            res.status(201).json(responseHandle(category))
-        else
-            res.status(404).json(responseHandle("Not Found", true))
-    }
-)
+export const deleteCategory = factory.deleteDocument<ICategory>(CategoryModel)

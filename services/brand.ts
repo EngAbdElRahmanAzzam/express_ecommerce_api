@@ -3,7 +3,7 @@ import asyncHandler from "express-async-handler";
 import slugify  from "slugify" 
 import { BrandModel } from "../models/brand";
 import { responseHandle } from "../utils/apiResponse";
-import { deleteDocument, getDocument } from "./handlerFactory";
+import { factory } from "./handlerFactory";
 import { IBrand } from "../interfaces/brand";
 
 /**
@@ -49,7 +49,7 @@ export const getBrands = async (req:Request, res:Response) => {
  * @url GET api/v1/brand/:id
  * @returns brand | not found
  */
-export const getBrand = getDocument<IBrand>(BrandModel)
+export const getBrand = factory.getDocument<IBrand>(BrandModel)
 
 /**
  * @access private
@@ -77,4 +77,4 @@ export const updateBrand = asyncHandler(
  * @url DELETE api/v1/brand/:id
  * @returns brand | not found
  */
-export const deleteBrand = deleteDocument<IBrand>(BrandModel)
+export const deleteBrand = factory.deleteDocument<IBrand>(BrandModel)

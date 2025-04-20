@@ -3,7 +3,8 @@ import asyncHandler from "express-async-handler"
 import { SubcategoryModel } from "../models/subcategory"
 import slugify from "slugify"
 import { responseHandle } from "../utils/apiResponse"
-
+import { factory } from "./handlerFactory";
+import {ISubcategory} from "../interfaces/subcategory"
 
 
 /**
@@ -109,18 +110,7 @@ export const updateSubcategory = asyncHandler(
  * @url DELETE api/v1/subcategory/:id
  * @returns category
  */
-export const deleteSubcategory = asyncHandler(
-    async (req:Request, res:Response) => {
-        const subcategoryId = req.params.id
-
-        const subcategory = await SubcategoryModel.findByIdAndDelete(subcategoryId)
-
-        if(subcategory)
-            res.status(201).json(responseHandle(subcategory))
-        else
-            res.status(404).json(responseHandle("not found subcategory", true))
-    }
-)
+export const deleteSubcategory = factory.deleteDocument<ISubcategory>(SubcategoryModel)
 
 
 /**
