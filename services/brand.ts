@@ -3,6 +3,8 @@ import asyncHandler from "express-async-handler";
 import slugify  from "slugify" 
 import { BrandModel } from "../models/brand";
 import { responseHandle } from "../utils/apiResponse";
+import { deleteDocument, getDocument } from "./handlerFactory";
+import { IBrand } from "../interfaces/brand";
 
 /**
  * @access private
@@ -47,19 +49,7 @@ export const getBrands = async (req:Request, res:Response) => {
  * @url GET api/v1/brand/:id
  * @returns brand | not found
  */
-
-export const getBrand = asyncHandler(
-    async (req:Request, res:Response) => {
-        const brandId = req.params.id
-
-        const brand = await BrandModel.findById(brandId)
-
-        if(brand)
-            res.status(200).json(responseHandle(brand))
-        else
-            res.status(404).json(responseHandle("brand Not Found", true))
-    }
-)
+export const getBrand = getDocument<IBrand>(BrandModel)
 
 /**
  * @access private
@@ -87,16 +77,4 @@ export const updateBrand = asyncHandler(
  * @url DELETE api/v1/brand/:id
  * @returns brand | not found
  */
-
-export const deleteBrand = asyncHandler( 
-    async (req:Request, res:Response) => {
-        const brandId = req.params.id
-
-        const brand = await BrandModel.findByIdAndDelete(brandId)
-
-        if(brand)
-            res.status(201).json(responseHandle(brand))
-        else
-            res.status(404).json(responseHandle("Not Found brand", true))
-    }
-)
+export const deleteBrand = deleteDocument<IBrand>(BrandModel)
