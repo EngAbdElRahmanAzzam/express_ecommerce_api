@@ -19,7 +19,7 @@ export const createCategory = asyncHandler(
         const {title} = req.body
         const slug = slugify(title)
 
-        const category =await CategoryModel.create({name:title,slug});
+        const category =await CategoryModel.create(req.body);
         res.status(201).json(responseHandle(category))
     }
 )
@@ -32,10 +32,8 @@ export const createCategory = asyncHandler(
  */
 
 export const getCategories = async (req:Request, res:Response) => {
-    const page = +(req.query.p  ?? 1)
-    const limit = +(req.query.l ?? 10)
-    const skip = (page-1) * limit
-    const categories = await CategoryModel.find().skip(skip).limit(limit)
+    const categories = await CategoryModel.find()
+    
     const data = {
         length : categories.length,
         categories:categories

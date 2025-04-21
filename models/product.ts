@@ -38,18 +38,9 @@ const productSchema = new Schema(
             max:1000000
         },
 
-        colors:{
-            type: [String],
-            validate: {
-                validator: function (colors:string[]) {
-                    return colors.every(color => /^#([0-9A-Fa-f]{6})$/.test(color));
-                },
-                message: (props:ValidatorProps) => `${props.value} contains invalid hex color(s)`
-            }
-        },
-
         thumbnail:{
             type:String,
+            required:[true, "cover image is required"],
             validate: {
                 validator: function (value: string) {
                     return /\.(jpg|jpeg|png|webp)$/i.test(value);
@@ -65,6 +56,16 @@ const productSchema = new Schema(
                     return images.every((image) => /\.(jpg|jpeg|png|webp)$/i.test(image));
                 },
                 message: (props:ValidatorProps) => `${props.value} is not a valid image extension`
+            }
+        },
+
+        colors:{
+            type: [String],
+            validate: {
+                validator: function (colors:string[]) {
+                    return colors.every(color => /^#([0-9A-Fa-f]{6})$/.test(color));
+                },
+                message: (props:ValidatorProps) => `${props.value} contains invalid hex color(s)`
             }
         },
 
@@ -84,9 +85,16 @@ const productSchema = new Schema(
             max: [5, 'Rating must be below or equal 5.0'],
         },
 
-        ratingsQuantity: {
+        ratingsNums: {
             type: Number,
             default: 0,
+            min: 0
+        },
+
+        brand:{
+            type:Schema.ObjectId,
+            ref:"Brand",
+            required:[true, "Brand is required"]
         },
 
         category:{
@@ -100,12 +108,6 @@ const productSchema = new Schema(
             ref:"Subcategory",
             required:[true, "Subcategory is required"]
         }],
-
-        brand:{
-            type:Schema.ObjectId,
-            ref:"Brand",
-            required:[true, "Brand is required"]
-        },
 
     },
     {
