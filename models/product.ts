@@ -22,7 +22,7 @@ const productSchema = new Schema(
             required:[true, "decription name is required"],
             unique:[true, "decription is already exists"],
             minlength: [5, "Too short product name"],
-            maxlength: [500, "Too long product name"],
+            maxlength: [5000, "Too long product name"],
         },
 
         price:{
@@ -103,11 +103,13 @@ const productSchema = new Schema(
             required:[true, "category is required"]
         },
 
-        subcategory:[{
-            type:Schema.ObjectId,
-            ref:"Subcategory",
-            required:[true, "Subcategory is required"]
-        }],
+        subcategory:[
+            {
+                type:Schema.ObjectId,
+                ref:"Subcategory",
+                required:[true, "Subcategory is required"]
+            }
+        ],
 
     },
     {

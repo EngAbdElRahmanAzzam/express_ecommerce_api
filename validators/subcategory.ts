@@ -6,13 +6,13 @@ import { idMongoValidator } from ".";
 
 const bodysubCategoryValidator = [
     body('title')
-    .notEmpty().withMessage('Category required')
-    .isLength({ min: 3 }).withMessage('Too short category name')
-    .isLength({ max: 32 }).withMessage('Too long category name'),
+        .notEmpty().withMessage('Category required')
+        .isLength({ min: 3 }).withMessage('Too short category name')
+        .isLength({ max: 32 }).withMessage('Too long category name'),
 
     body('categoryId')
-    .notEmpty().withMessage('Category required')
-    .isMongoId().withMessage(msgErrors.id)
+        .notEmpty().withMessage('Category required')
+        .isMongoId().withMessage(msgErrors.id)
 ]
 
 export const categoryIdOptionalValidator = [
@@ -20,6 +20,7 @@ export const categoryIdOptionalValidator = [
         .optional()
         .isMongoId()
         .withMessage(msgErrors.id),
+
     catchErrorValidator
 ]
 
@@ -27,6 +28,7 @@ export const categoryIdRequredValidator = [
     param('categoryId')
         .isMongoId()
         .withMessage(msgErrors.id),
+        
     catchErrorValidator
 ]
 

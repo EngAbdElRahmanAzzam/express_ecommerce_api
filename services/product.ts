@@ -18,8 +18,8 @@ import {IProduct} from "../interfaces/product"
 
 export const createProduct = asyncHandler(
     async (req:Request, res:Response) => {
-        const {title} = req.body
-        req.body.slug = slugify(title)
+        const {name} = req.body
+        req.body.slug = slugify(name)
 
         const product = await ProductModel.create(req.body);
         res.status(201).json(responseHandle(product))

@@ -22,6 +22,7 @@ app.use("/product", productRouter)
 
 app.use((error:any , req: Request, res: Response, next: NextFunction)=>{
     res.status(500).json(error)
+    console.log(error)
 })
 
 app.listen(APP_PORT, ()=> {
