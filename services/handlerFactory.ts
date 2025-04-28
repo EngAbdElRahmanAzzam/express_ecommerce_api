@@ -14,7 +14,7 @@ export const factory ={
             if(document)
                 res.status(200).json(responseHandle(document))
             else
-                res.status(404).json(responseHandle("Not Found document with this id", true))
+                res.status(404).json(responseHandle("Not Found row with this id", true))
         }
     ),
 
