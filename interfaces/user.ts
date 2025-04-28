@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
 
-export interface IBrand extends Document {
+export interface IUser extends Document {
     username:string,
     slug:string,
     profileImg?:string,
