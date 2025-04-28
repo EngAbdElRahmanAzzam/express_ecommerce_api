@@ -1,7 +1,7 @@
 import { Schema, model, ValidatorProps } from "mongoose";
 const userSchema = new Schema(
     {
-        name:{
+        username:{
             type:String,
             trim:true,
             required:[true, "username is required"],
@@ -17,7 +17,7 @@ const userSchema = new Schema(
             message: (props: ValidatorProps) => `${props.value} is not a valid image URL!`
         },
 
-        email:{
+        useremail:{
             type:String,
             trim:true,
             required:[true, "subcategory name is required"],
@@ -30,7 +30,7 @@ const userSchema = new Schema(
             }
         },
 
-        password:{
+        userpassword:{
             type:String,
             trim:true,
             required:[true, "user password is required"],
@@ -42,12 +42,17 @@ const userSchema = new Schema(
             }
         },
 
-        phone:String,
+        userphone:String,
 
-        role:{
+        userrole:{
             type:String,
             enum:["user", "admin"],
             default:"user"
+        },
+
+        active:{
+            type:Boolean,
+            default:true
         }
 
     }
