@@ -1,4 +1,6 @@
 import { Schema, model, ValidatorProps } from "mongoose";
+import {hash} from "bcryptjs"
+
 const userSchema = new Schema(
     {
         user$name:{
@@ -34,15 +36,12 @@ const userSchema = new Schema(
             type:String,
             trim:true,
             required:[true, "user password is required"],
-            minlength: [3, "Too short password"],
-            maxlength: [32, "Too long password"],
-            validate:{
-                validator: (val:string) => /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/.test(val),
-                message: (props: ValidatorProps) => `Password must be at least 8 characters long and contain at least one letter and one number`
-            }
         },
 
-        user$phone:String,
+        user$phone:{
+            type:String,
+            unique: [true, "Phone number already exists"]
+        },
 
         user$role:{
             type:String,
@@ -53,12 +52,47 @@ const userSchema = new Schema(
         user$active:{
             type:Boolean,
             default:true
-        }
+        },
 
     }
     ,
     {
-        timestamps:true
+        timestamps:true,
+
+        toJSON: {
+            virtuals: true,
+            transform: function (doc, ret) {
+                ret.username = ret["user$name"];
+                ret.email = ret["user$email"];
+                ret.profileImage = ret["user$profileImg"];
+                ret.phone = ret["user$phone"];
+                ret.role = ret["user$role"];
+                ret.active = ret["user$active"];
+                ret.id = doc._id.toString();
+    
+                delete ret._id;
+                delete ret.__v;
+                delete ret["user$name"];
+                delete ret["user$email"];
+                delete ret["user$password"];
+                delete ret["user$profileImg"];
+                delete ret["user$phone"];
+                delete ret["user$role"];
+                delete ret["user$active"];
+                delete ret["user$slug"];
+          
+                return ret;
+            }
+        }
+
     }
-    ) 
+) 
+
+userSchema.pre("save", async function (next){
+    if(this.user$password)
+        this.user$password = await hash(this.user$password, 12);
+
+    next();
+})
+
 export const UserModel = model("User", userSchema)
