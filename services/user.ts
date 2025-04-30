@@ -15,7 +15,7 @@ import {hash , compare} from "bcryptjs"
  */
 export const createUser = asyncHandler(
     async (req:Request, res:Response) => {
-        const allowedKeys = new Set(["name", "email", "password", "phone", "role", "profileImg" , "slug" , "active"])
+        const allowedKeys = new Set(["name", "email", "password", "phone", "role", "profileImg", "active"])
         let filterdRow:Record<string, unknown> = {} 
  
         for(const key in req.body)
@@ -119,7 +119,7 @@ export const updateUserPassword = asyncHandler(
             res.status(400).json(responseHandle("Incorrect current password", true));
             return;
         }
-        
+
         user.user$password = await hash(password, 12)
         await user.save()
 
