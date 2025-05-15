@@ -7,6 +7,7 @@ import { subcategoryRouter } from "./api/subcategory"
 import { brandRouter } from "./api/brand"
 import { productRouter } from "./api/product"
 import { userRouter } from "./api/user"
+import { authRouter } from "./api/auth"
 
 
 const app = server()
@@ -20,6 +21,7 @@ app.use("/subcategory",subcategoryRouter)
 app.use("/brand", brandRouter)
 app.use("/product", productRouter)
 app.use("/user", userRouter)
+app.use("/auth", authRouter)
 
 app.use((error:any , req: Request, res: Response, next: NextFunction)=>{
     res.status(500).json({error})

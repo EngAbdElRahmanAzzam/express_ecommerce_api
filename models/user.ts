@@ -22,10 +22,9 @@ const userSchema = new Schema(
         user$email:{
             type:String,
             trim:true,
-            required:[true, "subcategory name is required"],
-            unique:[true, "This name already exsits"],
-            minlength: [3, "Too short subcategory name"],
-            maxlength: [32, "Too long subcategory name"],
+            required:[true, "email is required"],
+            unique:[true, "This email already exsits"],
+            maxlength: [50, "Too long email"],
             validate:{
                 validator:(val:string) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/.test(val),
                 message: (props:ValidatorProps) => `${props.value} is not a valid email!`
@@ -37,6 +36,8 @@ const userSchema = new Schema(
             trim:true,
             required:[true, "user password is required"],
         },
+
+        user$passwordUpdateAt : Date,
 
         user$phone:{
             type:String,

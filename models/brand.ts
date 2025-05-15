@@ -1,6 +1,8 @@
 import { Schema, model , ValidatorProps  } from "mongoose";
+import { collections } from "../config";
+import { IBrand } from "../interfaces/brand";
 
-const brandSchema = new Schema(
+const brandSchema:Schema = new Schema<IBrand>(
     {
         name:{
             type:String,
@@ -29,4 +31,4 @@ const brandSchema = new Schema(
     }
 )
 
-export const BrandModel = model('Brand' , brandSchema)
+export const BrandModel = model<IBrand>(collections.brand , brandSchema)

@@ -121,6 +121,8 @@ export const updateUserPassword = asyncHandler(
         }
 
         user.user$password = await hash(password, 12)
+        user.user$passwordUpdateAt = Date.now()
+        
         await user.save()
 
         res.status(201).json(responseHandle("Password updated successfully", true))
