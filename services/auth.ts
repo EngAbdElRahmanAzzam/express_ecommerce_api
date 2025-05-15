@@ -92,6 +92,12 @@ export const protectedRoute =asyncHandler(
                 return;
             }
         }
+
+        // active
+        if(!user.user$active){
+            res.status(403).json(responseHandle("blocked account" , true))
+            return;
+        }
         
         req.user = user
         next()
