@@ -8,7 +8,7 @@ import { brandRouter } from "./api/brand"
 import { productRouter } from "./api/product"
 import { userRouter } from "./api/user"
 import { authRouter } from "./api/auth"
-
+import "./interfaces/index"
 
 const app = server()
 

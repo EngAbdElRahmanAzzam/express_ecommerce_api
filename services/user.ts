@@ -120,8 +120,8 @@ export const updateUserPassword = asyncHandler(
             return;
         }
 
-        user.user$password = await hash(password, 12)
-        user.user$passwordUpdateAt = Date.now()
+        user.user$password = password
+        user.user$passwordUpdateAt = new Date()
         
         await user.save()
 

@@ -1,7 +1,8 @@
 import { Schema, model, ValidatorProps } from "mongoose";
 import {hash} from "bcryptjs"
+import { IUser } from "../interfaces/user";
 
-const userSchema = new Schema(
+const userSchema = new Schema<IUser>(
     {
         user$name:{
             type:String,
@@ -69,7 +70,7 @@ const userSchema = new Schema(
                 ret.phone = ret["user$phone"];
                 ret.role = ret["user$role"];
                 ret.active = ret["user$active"];
-                ret.id = doc._id.toString();
+                ret.id = doc._id
     
                 delete ret._id;
                 delete ret.__v;

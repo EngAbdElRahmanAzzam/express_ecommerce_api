@@ -72,20 +72,26 @@ export const protectedRoute =asyncHandler(
         }
 
         //validation token and decode data
-        const decoded: any  = jwt.verify(authorization as string, JWT_KEY);
+        const decodedToken: any  = jwt.verify(authorization as string, JWT_KEY);
         
         // check user exist
-        const user = await UserModel.findById(decoded.userId)
+        const user = await UserModel.findById(decodedToken.userId)
         if(!user)
         {
             res.status(403).json(responseHandle("please login" , true))
             return
         }
-
-        // 4) Check if user change his password after token created
-
         
-
+        // 4) Check if user change his password after token created
+        if(user.user$passwordUpdateAt)
+        {
+            const changeTime: number = parseInt((user.user$passwordUpdateAt.getTime() / 1000).toString())
+            if (changeTime > decodedToken.iat){
+                res.status(403).json(responseHandle("please login" , true))
+                return;
+            }
+        }
+        
         req.user = user
         next()
     }
