@@ -1,13 +1,13 @@
 import { Router } from "express";
 import {createBrand , getBrands , getBrand, updateBrand, deleteBrand} from "../services/brand";
 import {createBrandValidator, getBrandValidator , updateBrandValidator, deleteBrandValidator } from "../validators/brand";
-import { protectedRoute } from "../services/auth";
+import { allowedTo, protectedRoute } from "../services/auth";
 
 export const brandRouter = Router()
 
 brandRouter.route('/')
     .post(protectedRoute,createBrandValidator,createBrand)
-    .get(protectedRoute,getBrands)
+    .get(protectedRoute,allowedTo(["manager"]),getBrands)
 
 
 brandRouter.route('/:id')

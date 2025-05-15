@@ -7,6 +7,7 @@ import { UserModel } from "../models/user";
 import { JWT_EXPIRE, JWT_KEY } from "../config";
 import { createToken } from "../utils/jwtToken";
 import { compare } from "bcryptjs";
+import {TRoles} from "../interfaces/user"
 
 
 export const signUp = asyncHandler(
@@ -81,7 +82,7 @@ export const protectedRoute =asyncHandler(
             res.status(403).json(responseHandle("please login" , true))
             return
         }
-        
+
         // 4) Check if user change his password after token created
         if(user.user$passwordUpdateAt)
         {
@@ -96,3 +97,15 @@ export const protectedRoute =asyncHandler(
         next()
     }
 ) 
+
+
+export const allowedTo = (roles:TRoles)=> asyncHandler(
+        async (req:Request, res:Response, next:NextFunction) => {
+            if(!roles.includes(req.user?.user$role!))
+            {
+                res.status(403).json(responseHandle("forbidden unautherized" , true))
+                return;
+            }
+            next()
+        }
+    )

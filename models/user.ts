@@ -1,6 +1,7 @@
 import { Schema, model, ValidatorProps } from "mongoose";
 import {hash} from "bcryptjs"
 import { IUser } from "../interfaces/user";
+import { ROLES } from "../config";
 
 const userSchema = new Schema<IUser>(
     {
@@ -47,7 +48,7 @@ const userSchema = new Schema<IUser>(
 
         user$role:{
             type:String,
-            enum:["user", "admin"],
+            enum:ROLES,
             default:"user"
         },
 
